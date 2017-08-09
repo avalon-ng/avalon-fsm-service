@@ -1,10 +1,14 @@
-const http = require('http');
+const express = require('express');
+const bodyParser = require('body-parser');
+const app = express();
 const port = 4001;
 
-const server = http.createServer((req, res) => {
-	console.log('Hello');
-	res.end('Hello');
-});
+app.use(bodyParser.json());      
+app.use(bodyParser.urlencoded({ extended: true })); 
 
-server.listen(port);
-console.log('Listen port on: ', port);
+app.post('/', function (req, res) {
+	const { state, payload } = req.body;
+  res.status(400).json({state, payload});
+})
+
+app.listen(4001)
