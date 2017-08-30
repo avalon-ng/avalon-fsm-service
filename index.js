@@ -23,14 +23,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true })); 
 
 app.post('/', (req, res) => {
-	const { state, payload } = req.body;
-  res.status(400).json({state, payload});
-})
-
-app.post('/initGame', (req, res) => {
-	const { state, payload } = req.body;
+	const { state, payload, type } = req.body;
 	let newState = reducer(undefined, {});
-	newState = reducer(newState, initGame(payload));
+	newState = reducer(newState, actionCreators[type](payload));
 	res.status(400).json(newState);
 })
 
