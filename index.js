@@ -26,7 +26,12 @@ app.post('/', (req, res) => {
 	const { state, payload, type } = req.body;
 	let newState = reducer(undefined, {});
 	newState = reducer(newState, actionCreators[type](payload));
-	res.status(400).json(newState);
+	let reason = getValidateError();
+	if ( reason !== null ){
+		res.status(400).json({ status: 'fail', reason });
+	} else {
+		res.status(400).json({ status: 'ok', newState});
+	}
 })
 
 app.listen(4001);
